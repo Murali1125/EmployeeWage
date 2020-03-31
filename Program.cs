@@ -5,6 +5,7 @@ UC1: Start with Displaying welcome to Employee Wage Computation Program on Maste
 UC2: Calculate Daily Employee Wage assume per hour wage =20 daily working hours 8
 UC3: Add Part time Employee & Wage - Assume Part time Hour is 4
 UC4: Solving using Switch Statement
+UC5:  Calculating Wages for a Month  Assume 20 Working Day per Month
 */
 
 
@@ -19,9 +20,21 @@ namespace EmployeeWage
             // create object for Program class
             Program obj_program = new Program();
             // call EmployeeWage function
-            obj_program.EmployeeWage();
+            obj_program.MontlyEmpWage();
         }// end :  Main(string[] args)
-        public void EmployeeWage()
+
+
+        // method for montly employee wage calculation
+        public void MontlyEmpWage() { 
+            // cal 20 times Employeedailywage
+            for (int i = 1; i <= 20; i++) {
+                Program.EmployeeDailyWage(i);
+            }//end: for (int i = 1; i <= 20; i++)
+        }//end: MontlyEmpWage()
+
+
+        // employee daily wage method
+        public static void EmployeeDailyWage(int day)
         {
             // Variables 
             int attandance,
@@ -44,7 +57,9 @@ namespace EmployeeWage
                     break;
             }//end:switch (attandance)
             total_day_wage = temp_hours * wage_per_hour;
-            Console.WriteLine("total daily wage = " + total_day_wage);
-        }// end:  EmployeeWage()
+            Console.Write(" day {0,2} wage ", day); 
+            Console.WriteLine(total_day_wage);
+
+        }// end:  EmployeeDailyWage()
     } // end: class Program
 }// end : namespace EmployeeWage
