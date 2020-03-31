@@ -25,16 +25,20 @@ namespace EmployeeWage
 
 
         // method for montly employee wage calculation
-        public void MontlyEmpWage() { 
+        public void MontlyEmpWage() {
+            // monthly wage variable
+            int total_monthly_wage = 0;
             // cal 20 times Employeedailywage
             for (int i = 1; i <= 20; i++) {
-                Program.EmployeeDailyWage(i);
+                total_monthly_wage = total_monthly_wage + Program.EmployeeDailyWage(i);
             }//end: for (int i = 1; i <= 20; i++)
+
+            Console.WriteLine("Total monthly wage = " + total_monthly_wage);
         }//end: MontlyEmpWage()
 
 
         // employee daily wage method
-        public static void EmployeeDailyWage(int day)
+        public static int EmployeeDailyWage(int day)
         {
             // Variables 
             int attandance,
@@ -59,6 +63,7 @@ namespace EmployeeWage
             total_day_wage = temp_hours * wage_per_hour;
             Console.Write(" day {0,2} wage ", day); 
             Console.WriteLine(total_day_wage);
+            return total_day_wage;
 
         }// end:  EmployeeDailyWage()
     } // end: class Program
