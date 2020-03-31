@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 /* 
 UC1: Start with Displaying welcome to Employee Wage Computation Program on Master Branch
 UC2: Calculate Daily Employee Wage assume per hour wage =20 daily working hours 8
@@ -7,6 +7,8 @@ UC3: Add Part time Employee & Wage - Assume Part time Hour is 4
 UC4: Solving using Switch Statement
 UC5: Calculating Wages for a Month  Assume 20 Working Day per Month
 UC6: Calculate Wages till a condition of total working hours or days is reached for a month - Assume 100 hours 
+UC7: Refactor the Code to write a function to get work hours
+UC8: Store the Daily Wage along with the Total Wage
 */
 
 
@@ -15,7 +17,9 @@ namespace EmployeeWage
     class Program
     {
         static int days=20 ,
-                   hours=0;
+                   hours=0,
+                   total_monthly_wage = 0;
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Employee Wage");
@@ -28,9 +32,8 @@ namespace EmployeeWage
 
         // method for montly employee wage calculation
         public static void MontlyEmpWage() {
-            // monthly wage variable
-            int total_monthly_wage = 0,
-                maxdays=days;
+            // days variable
+            int   maxdays=days;
 
             // cal Employeedailywage upto number of days times
             for (int i = 1; i <=maxdays; i++) {
@@ -59,6 +62,8 @@ namespace EmployeeWage
                 parttime_hours=4,
                 total_day_wage=0,
                 temp_hours=0;
+            // crating a Dictionary to store day and its value
+            Dictionary<int, int> day_wage = new Dictionary<int, int>();
 
             // generating random number if the number=  0 absent ,  1 fulltime_present, 2 parttime_present
             Random random = new Random();
@@ -90,6 +95,8 @@ namespace EmployeeWage
                     break;
             }//end:switch (attandance)
             total_day_wage = temp_hours * wage_per_hour;
+            // add day and corresponding wage in a dictionary
+            day_wage.Add(day, total_day_wage);
             Console.Write(" day {0,2} wage ", day); 
             Console.WriteLine(total_day_wage);
             return total_day_wage;
