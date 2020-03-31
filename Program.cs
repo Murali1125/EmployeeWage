@@ -4,6 +4,7 @@ using System.Text;
 UC1: Start with Displaying welcome to Employee Wage Computation Program on Master Branch
 UC2: Calculate Daily Employee Wage assume per hour wage =20 daily working hours 8
 UC3: Add Part time Employee & Wage - Assume Part time Hour is 4
+UC4: Solving using Switch Statement
 */
 
 
@@ -34,12 +35,16 @@ namespace EmployeeWage
             Random random = new Random();
             attandance = random.Next(0,3);
             Console.WriteLine(attandance);
-            if(attandance == 1)
-            { temp_hours = fullDay_hours; }//end: if(attandance == 1)
-            else if(attandance == 2 )
-            { temp_hours = parttime_hours; } // end: else if(attandance ==2 )
+            switch (attandance) {
+                case 1:
+                    temp_hours = fullDay_hours;
+                    break;
+                case 2:
+                    temp_hours = parttime_hours;
+                    break;
+            }//end:switch (attandance)
             total_day_wage = temp_hours * wage_per_hour;
-            Console.WriteLine(total_day_wage);
+            Console.WriteLine("total daily wage = " + total_day_wage);
         }// end:  EmployeeWage()
     } // end: class Program
 }// end : namespace EmployeeWage
