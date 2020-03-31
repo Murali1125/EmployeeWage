@@ -14,66 +14,110 @@ UC8: Store the Daily Wage along with the Total Wage
 
 namespace EmployeeWage
 {
-    class Program
+    public class Program
     {
-        static int days=20 ,
-                   hours=0,
-                   total_monthly_wage = 0;
-
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Employee Wage");
-            // create object for Program class
-            Program obj_program = new Program();
-            // call EmployeeWage function
-            Program.MontlyEmpWage();
+            // creating list to store save companies
+            var company_name = new List<string>();
+            company_name.Add("Bridgelabzs");
+            company_name.Add("SRRprojects");
+            // create dictionary to store comapny and total montly wage
+            Dictionary<string, int> com_wage = new Dictionary<string, int>();
+            // create object for Employee for each company
+            foreach (string s in company_name)
+            {
+                Employee obj_emp = new Employee(s);
+                // call EmployeeWage function
+                int month_total_wage = obj_emp.MontlyEmpWage();
+                com_wage.Add(s, month_total_wage);
+            }//end :  for (string s in company_name)
+            
         }// end :  Main(string[] args)
 
 
-        // method for montly employee wage calculation
-        public static void MontlyEmpWage() {
-            // days variable
-            int   maxdays=days;
+    } // end: class Program
+    public class Employee
+    {
+        // variables
+        int max_days,
+            total_monthly_wage,
+            max_hours,
+            wage_per_hour,
+            hours;
+        string company_name;
+       
+        // constructor for initilize default values
+        public Employee(string company="Bridgelabz")
+        {
+            this.max_days = 20;
+            this.max_hours = 100;
+            this.wage_per_hour = 20;
+            this.company_name = company;
+        }
+        // constructor to initilize the variables
+        public Employee (string company_name , int max_days, int max_hours, int wage_per_hour)
+        {
+            // initilizing variables
+            this.max_days = max_days;
+            this.wage_per_hour = wage_per_hour;
+            this.max_hours = max_hours;
+            this.company_name = company_name;
 
+        }// end: Employeewage(int max_days, int max_hours, int wage_per_hour)
+
+        // method for montly employee wage calculation
+        public int MontlyEmpWage()
+        {
+            Console.WriteLine("Welcome to {0} company wage computation",company_name);
+            //variables
+            int days = 0;
+            // create instance for Employeewage class
+            Employee obj_empwage = new Employee();
             // cal Employeedailywage upto number of days times
-            for (int i = 1; i <=maxdays; i++) {
-                total_monthly_wage = total_monthly_wage + Program.EmployeeDailyWage(i);
+            for (int i = 1; i <= max_days; i++)
+            {   
+                total_monthly_wage = total_monthly_wage +obj_empwage.EmployeeDailyWage(i);
                 // break the loop  if hourse reached to 100 or days reached 20
-                if (hours >= 100)
-                {
-                    days = i;
+                if (hours >= max_hours)
+                {   days = i;
                     break;
                 }//end : if (hours >= 100)
-            }//end: for (int i = 1; i <= 20; i++)
+                days++;
+            }//end: for (int i = 1; i <= maxdays i++)
 
             Console.WriteLine("Total monthly wage = " + total_monthly_wage);
             Console.WriteLine("Toal working hourse in the month " + hours);
             Console.WriteLine("Total working days in the month " + days);
+            return total_monthly_wage;
         }//end: MontlyEmpWage()
 
 
         // employee daily wage method
-        public static int EmployeeDailyWage(int day)
+        public int EmployeeDailyWage(int day)
         {
             // Variables 
             int attandance,
-                wage_per_hour=20,
-                fullDay_hours=8,
-                parttime_hours=4,
-                total_day_wage=0,
-                temp_hours=0;
+                fullDay_hours = 8,
+                parttime_hours = 4,
+                total_day_wage,
+                temp_hours = 0;
             // crating a Dictionary to store day and its value
             Dictionary<int, int> day_wage = new Dictionary<int, int>();
 
             // generating random number if the number=  0 absent ,  1 fulltime_present, 2 parttime_present
             Random random = new Random();
-            attandance = random.Next(0,3);
-            switch (attandance) {
+            attandance = random.Next(0, 3);
+            // checking the employee full time or part time by using swith
+            switch (attandance)
+            {
                 case 1:
-                    if (hours + fullDay_hours > 100)
+                    // if hourse getting morethan 100 then assign max hourse to it ie 100
+                    if (hours + fullDay_hours > max_hours)
                     {
-                        temp_hours = 100 - hours;
-                        hours = 100;
+                        temp_hours = max_hours - hours;
+                        hours = max_hours;
                     }// end: if (hours + fullDay_hours > 100)
                     else
                     {
@@ -82,10 +126,10 @@ namespace EmployeeWage
                     }// end : else -> if (hours + fullDay_hours > 100)
                     break;
                 case 2:
-                    if (hours + parttime_hours > 100)
+                    if (hours + parttime_hours > max_hours)
                     {
-                        temp_hours = 100 - hours;
-                        hours = 100;
+                        temp_hours = max_hours - hours;
+                        hours = max_hours;
                     }//end :  if (hours + parttime_hours > 100)
                     else
                     {
@@ -94,13 +138,13 @@ namespace EmployeeWage
                     }// end: else -> if (hours + parttime_hours > 100)
                     break;
             }//end:switch (attandance)
+            Console.WriteLine(hours);
             total_day_wage = temp_hours * wage_per_hour;
             // add day and corresponding wage in a dictionary
             day_wage.Add(day, total_day_wage);
-            Console.Write(" day {0,2} wage ", day); 
+            Console.Write(" day {0,2} wage ", day);
             Console.WriteLine(total_day_wage);
             return total_day_wage;
-
         }// end:  EmployeeDailyWage()
-    } // end: class Program
+    } // end: class EmployeeWage
 }// end : namespace EmployeeWage
